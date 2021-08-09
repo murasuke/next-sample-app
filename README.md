@@ -1,34 +1,145 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.jsことはじめ
 
-## Getting Started
-
-First, run the development server:
+## Next作成
 
 ```bash
+npx create-next-app sample-app --use-npm
+```
+* 動作確認
+
+```bash
+cd sample-app/
 npm run dev
-# or
-yarn dev
+```
+## 必要なpackageを追加
+```bash
+ npm i -D typescript @types/react @types/node
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## tsconfig.jsonを追加
+```json
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve"
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
+```
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## .jsの拡張子を変更し型定義を追加
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+```bash
+mv ./pages/api/hello.js  ./pages/api/hello.ts
+mv ./pages/_app.js ./pages/_app.tsx
+mv ./pages/index.js ./pages/index.tsx
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```typescript
+// Before: hello.js
+export default (req, res) => {
+  res.status(200).json({ name: 'John Doe' })
+}
 
-## Learn More
+// After: hello.ts
+import {NextApiRequest, NextApiResponse} from "next";
 
-To learn more about Next.js, take a look at the following resources:
+export default (req: NextApiRequest, res: NextApiResponse) => {
+  res.status(200).json({ name: 'John Doe' })
+}
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```typescript
+// Before: _app.js
+import '../styles/globals.css'
 
-## Deploy on Vercel
+function MyApp({ Component, pageProps }) {
+  return <Component {...pageProps} />
+}
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+export default MyApp
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+// After: _app.tsx
+import '../styles/globals.css'
+import {AppProps} from "next/app";
+
+function MyApp({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />
+}
+
+export default MyApp
+}
+```
+
+## ESLint導入
+
+```bash
+npm i -D eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser
+touch .eslintrc.js
+```
+
+```javascript
+module.exports = {
+    "plugins": ["prettier"],
+    "extends": ["plugin:react/recommended"],
+    "rules": {
+        "prettier/prettier": "error"
+    }
+};
+```
+
+## Prettier導入
+
+```bash
+npm i -D prettier eslint-config-prettier eslint-plugin-prettier
+touch .prettierrc
+```
+
+```json
+{
+  "trailingComma": "es5",
+  "tabWidth": 2,
+  "arrowParens": "always"
+}
+```
+
+
+## Reactコンポーネント追加
+
+https://github.com/murasuke/hand-writing-react-component
+からコンポーネントを組み込んでみる
+
+* componetsフォルダには、コンポーネント自身を追加
+* pagesには、コンポーネントを利用するPageを追加
+  * localhost:3000/handWriting で開くことができる(Routing組み込み済み)
+
+```bash
+mkdir components
+touch ./components/HandWrinting.tsx
+touch ./pages/handWrinting.tsx
+```
+

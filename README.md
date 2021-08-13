@@ -1,20 +1,27 @@
 # Next.jsのはじめ方
 
-## Next作成
+* 
+
+## Next.jsのテンプレートを作成
 
 ```bash
 npx create-next-app sample-app --use-npm
 ```
+
+  > `with-typescript`テンプレート使えば、最初からTypeScript化されているらしい
+
 * 動作確認
 
 ```bash
 cd sample-app/
 npm run dev
 ```
-## 必要なpackageを追加
+サンプルページが起動することを確認(./pages/index.tsx)
+
+
+## TypeScript化に必要なpackageを追加
 ```bash
  npm i -D typescript @types/react @types/node
-
 ```
 
 ## tsconfig.jsonを追加
@@ -50,7 +57,7 @@ npm run dev
 }
 ```
 
-## .jsの拡張子を変更し型定義を追加
+## .jsの拡張子を変更。ソースを修正して型定義を追加
 
 ```bash
 mv ./pages/api/hello.js  ./pages/api/hello.ts

@@ -1,4 +1,4 @@
-# Next.jsことはじめ
+# Next.jsのはじめ方
 
 ## Next作成
 
@@ -133,7 +133,7 @@ touch .prettierrc
 https://github.com/murasuke/hand-writing-react-component
 からコンポーネントを組み込んでみる
 
-* componetsフォルダには、コンポーネント自身を追加
+* componetsフォルダを作り、コンポーネント(.tsx)を配置
 * pagesには、コンポーネントを利用するPageを追加
   * localhost:3000/handWriting で開くことができる(Routing組み込み済み)
 
